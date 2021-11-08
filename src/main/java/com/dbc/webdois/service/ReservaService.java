@@ -79,7 +79,7 @@ public class ReservaService {
         dto.setHoteisDTO(hoteisService.getPorId(novaReserva.getIdHotel()));
         dto.setQuartosDTO(quartosService.getQuartoPorId(novaReserva.getIdQuarto()));
         dto.setUsuarioDTO(usuarioService.getPorId(novaReserva.getIdUsuario()));
-//        emailService.enviarCadastroReserva(dto);
+        emailService.enviarCadastroReserva(dto);
         return dto;
     }
 

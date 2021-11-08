@@ -20,10 +20,10 @@ public class UsuarioRepository {
     public UsuarioRepository() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         listaUsuario.add(new UsuarioEntity(COUNTER.incrementAndGet(), "Matheus", "41286811805",
-                LocalDate.parse("20/06/1995", formatter), "testeapiwebemail@gmail.com", TipoUsuario.COMUM));
-        listaUsuario.add(new UsuarioEntity(COUNTER.incrementAndGet(), "Camilo", "12345678910", LocalDate.parse("20/06/1995", formatter), "guiuser1999@gmail.com", TipoUsuario.COMUM));
-        listaUsuario.add(new UsuarioEntity(COUNTER.incrementAndGet(), "Guilherme", "12345678911", LocalDate.parse("20/06/1995", formatter), "testeapiwebemail@gmail.com", TipoUsuario.COMUM));
-        listaUsuario.add(new UsuarioEntity(COUNTER.incrementAndGet(), "Tiago", "12345678912", LocalDate.parse("20/06/1995", formatter), "testeapiwebemail@gmail.com", TipoUsuario.COMUM));
+                LocalDate.parse("20/06/1995", formatter), "testeapiweb@outlook.com", TipoUsuario.COMUM));
+        listaUsuario.add(new UsuarioEntity(COUNTER.incrementAndGet(), "Teste", "12345678910", LocalDate.parse("20/06/1995", formatter), "testeapiweb@outlook.com", TipoUsuario.COMUM));
+        listaUsuario.add(new UsuarioEntity(COUNTER.incrementAndGet(), "Guilherme", "12345678911", LocalDate.parse("20/06/1995", formatter), "testeapiweb@outlook.com", TipoUsuario.COMUM));
+        listaUsuario.add(new UsuarioEntity(COUNTER.incrementAndGet(), "Arthur", "12345678912", LocalDate.parse("20/06/1995", formatter), "testeapiweb@outlook.com", TipoUsuario.COMUM));
     }
 
     public UsuarioEntity create(UsuarioEntity usuarioEntity){
