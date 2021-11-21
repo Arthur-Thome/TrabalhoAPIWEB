@@ -11,9 +11,12 @@ import com.dbc.webdois.repository.QuartosRepository;
 import com.dbc.webdois.repository.ReservaRepository;
 import com.dbc.webdois.repository.UsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +27,7 @@ public class ReservaService {
     private final HoteisRepository hoteisRepository;
     private final QuartosRepository quartosRepository;
     private final UsuarioRepository usuarioRepository;
+    private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
     //Listar
@@ -43,7 +47,7 @@ public class ReservaService {
     }
 
     //Criar
-    public ReservaDTO create(ReservaCreateDTO reservaCreateDTO) throws RegraDeNegocioException {
+    public ReservaDTO create(ReservaCreateDTO reservaCreateDTO) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
         ReservaEntity reservaEntity = objectMapper.convertValue(reservaCreateDTO, ReservaEntity.class);
         QuartosEntity quartosEntity = quartosRepository.findById(reservaCreateDTO.getIdQuarto())
                 .orElseThrow(() -> new RegraDeNegocioException("Quarto não encontrado"));
@@ -68,6 +72,8 @@ public class ReservaService {
                 objectMapper.convertValue(grupoEntity, GrupoDTO.class)).collect(Collectors.toList()));
         reservaDTO.setHoteisDTO(objectMapper.convertValue(reservaCriar.getHoteisEntity(), HoteisDTO.class));
         reservaDTO.setQuartosDTO(objectMapper.convertValue(reservaCriar.getQuartosEntity(), QuartosDTO.class));
+
+        emailService.enviarCadastroReserva(reservaDTO);
         return reservaDTO;
 
     }
@@ -141,32 +147,6 @@ public class ReservaService {
 
         return usuarioComReservaDTO;
     }
-
-    //HoteisComReserva
-    public List<HotelComReservaDTO> listReservasPorHotel(Integer id) throws RegraDeNegocioException{
-        return hoteisRepository.findById(id).stream()
-                .map(hotel -> {
-                    HotelComReservaDTO hotelComReservaDTO = objectMapper.convertValue(hotel, HotelComReservaDTO.class);
-                    hotelComReservaDTO.setReservas(
-                            hotel.getReservas()
-                                    .stream()
-                                    .map(reserva -> {
-                                        ReservaSemHotelDTO reservaSemHotelDTO = objectMapper.convertValue(reserva, ReservaSemHotelDTO.class);
-                                        reservaSemHotelDTO.setUsuarioDTO(objectMapper.convertValue(reserva.getUsuarioEntity(), UsuarioDTO.class));
-                                        reservaSemHotelDTO.getUsuarioDTO().setGrupos(reserva.getUsuarioEntity().getGrupos().stream().map(
-                                                grupoEntity -> objectMapper.convertValue(grupoEntity, GrupoDTO.class)
-                                        ).collect(Collectors.toList()));
-                                        reservaSemHotelDTO.setQuartosDTO(objectMapper.convertValue(reserva.getQuartosEntity(), QuartosDTO.class));
-
-                                        return reservaSemHotelDTO;
-                                    })
-                                    .collect(Collectors.toList())
-                    );
-                    return hotelComReservaDTO;
-                })
-                .collect(Collectors.toList());
-    }
-
 
 }
 

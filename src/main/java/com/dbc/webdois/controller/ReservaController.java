@@ -6,6 +6,7 @@ import com.dbc.webdois.dto.ReservaDTO;
 import com.dbc.webdois.dto.UsuarioComReservaDTO;
 import com.dbc.webdois.exceptions.RegraDeNegocioException;
 import com.dbc.webdois.service.ReservaService;
+import freemarker.template.TemplateException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -15,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Validated
@@ -44,7 +47,7 @@ public class ReservaController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
     @PostMapping
-    public ReservaDTO create(@Valid @RequestBody ReservaCreateDTO reservaCreateDTO) throws RegraDeNegocioException {
+    public ReservaDTO create(@Valid @RequestBody ReservaCreateDTO reservaCreateDTO) throws RegraDeNegocioException, MessagingException, TemplateException, IOException {
         log.info("Criando reserva");
         ReservaDTO reservaDTO = reservaService.create(reservaCreateDTO);
         log.info("Reserva criada");
@@ -101,18 +104,5 @@ public class ReservaController {
     public UsuarioComReservaDTO listarReservasPorUsuario(@Valid @PathVariable Integer idUsuario) throws RegraDeNegocioException{
         return reservaService.reservasPorUsuario(idUsuario);
     }
-
-    @ApiOperation(value = "Listar reservas por ID de hotel")
-    @ApiResponses(value ={
-            @ApiResponse(code = 200, message = "Reservas listadas com sucesso"),
-            @ApiResponse(code = 400, message = "Algum dado inconsistente"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
-    })
-    @GetMapping("/listar-por-hotel/{idHotel}")
-    public List<HotelComReservaDTO> listarReservasPorHotel(@Valid @PathVariable Integer idHotel) throws RegraDeNegocioException{
-        return reservaService.listReservasPorHotel(idHotel);
-    }
-
-
 
 }
