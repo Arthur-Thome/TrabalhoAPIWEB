@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
+import java.security.SignatureException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,6 +58,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        body.put("status", badRequest.value());
+        body.put("message", exception.getMessage());
+        return new ResponseEntity<>(body, badRequest);
+    }
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<Object> handleException(SignatureException exception,
+                                                  HttpServletRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
+        final HttpStatus badRequest = HttpStatus.FORBIDDEN;
         body.put("status", badRequest.value());
         body.put("message", exception.getMessage());
         return new ResponseEntity<>(body, badRequest);

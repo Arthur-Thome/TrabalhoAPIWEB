@@ -1,11 +1,11 @@
 package com.dbc.webdois.repository;
 
-import com.dbc.webdois.entity.HoteisEntity;
+
+
+import com.dbc.webdois.entity.GrupoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface HoteisRepository extends JpaRepository<HoteisEntity, Integer> {
-
+public interface GrupoRepository extends JpaRepository<GrupoEntity, Integer> {
 }
-

@@ -27,7 +27,7 @@ public class HoteisDTO {
     @NotNull(message = "Nome não pode ser null")
     @NotBlank(message = "Não pode estar em branco")
     @ApiModelProperty("Nome Cidade")
-    private String nomecidade;
+    private String nomeCidade;
 
     @NotNull(message = "Nome não pode ser null")
     @NotBlank(message = "Não pode estar em branco")
@@ -43,4 +43,5 @@ public class HoteisDTO {
     @NotBlank(message = "Não pode estar em branco")
     @ApiModelProperty("Nome logradouro")
     private String logradouro;
+
 }

@@ -1,6 +1,5 @@
 package com.dbc.webdois.dto;
 
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,19 +12,14 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ReservaDTO {
+public class ReservaSemHotelDTO {
     private Integer idReserva;
-
-    @NotNull(message = "Não pode estar null")
-    @ApiModelProperty(value = "Hoteis")
-    private HoteisDTO hoteisDTO;
 
     @NotNull(message = "Não pode estar null")
     @ApiModelProperty(value = "Quartos")
     private QuartosDTO quartosDTO;
 
-    @NotNull(message = "Não pode estar null")
-    @ApiModelProperty(value = "Usuario")
+    @NotNull(message = "Não pode estar null" )
+    @ApiModelProperty(value = "Usuarios")
     private UsuarioDTO usuarioDTO;
-
 }
