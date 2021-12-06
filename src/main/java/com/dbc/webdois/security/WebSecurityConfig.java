@@ -33,14 +33,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers("/").permitAll()
-                .antMatchers("/auth").permitAll()
-                .antMatchers(HttpMethod.GET, "/usuario/{idUsuario}/**").hasRole("USUARIO")
-                .antMatchers(HttpMethod.POST, "/usuario/**", "/reserva/**").hasRole("USUARIO")
-                .antMatchers(HttpMethod.PUT, "/usuario/**", "/reserva/**").hasRole("USUARIO")
-                .antMatchers(HttpMethod.DELETE, "/usuario/**", "/reserva/**").hasRole("USUARIO")
-                .antMatchers(HttpMethod.GET, "/usuario/{idUsuario}/*", "/quartos/*").hasRole("USUARIO")
-                .antMatchers("/**").hasRole("ADMIN") //ROLE_ADMIN
-                .anyRequest().authenticated()
+//                .antMatchers("/auth").permitAll()
+//                .antMatchers(HttpMethod.GET, "/usuario/{idUsuario}/**").hasRole("USUARIO")
+//                .antMatchers(HttpMethod.POST, "/usuario/**", "/reserva/**").hasRole("USUARIO")
+//                .antMatchers(HttpMethod.PUT, "/usuario/**", "/reserva/**").hasRole("USUARIO")
+//                .antMatchers(HttpMethod.DELETE, "/usuario/**", "/reserva/**").hasRole("USUARIO")
+//                .antMatchers(HttpMethod.GET, "/usuario/{idUsuario}/*", "/quartos/*").hasRole("USUARIO")
+//                .antMatchers("/**").hasRole("ADMIN") //ROLE_ADMIN
+//                .anyRequest().authenticated()
 
                 //filtro de autenticação...
                 .and().addFilterBefore(new TokenAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);

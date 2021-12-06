@@ -11,13 +11,15 @@ import java.io.Serializable;
 @Setter
 @Entity(name="RESERVA")
 public class ReservaEntity implements Serializable {
+    //Gera uma sequencia no banco = auto_increment
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RESERVA_SEQ")
     @SequenceGenerator(name = "RESERVA_SEQ", sequenceName = "SEQ_RESERVAS", allocationSize = 1)
     @Column(name = "id_reserva")
     private Integer idReserva;
 
-
+    //
+    //Recebe um objeto Hotel Entity
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_hoteis")
